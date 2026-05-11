@@ -44,10 +44,12 @@
     <button onclick="navigateTo('home')" class="text-indigo-600 mb-6 hover:underline">
       ← Назад к постам
     </button>
+    <br>
         <button onclick="deletePost()" id="post-delete-button" class="text-indigo-600 mb-6 hover:underline">
       Удалить пост
     </button>
-        <button onclick="editPost()" id="post-edit-button" class="text-indigo-600 mb-6 hover:underline">
+    <br>
+        <button onclick="showCreatePostModal()" id="post-edit-button" class="text-indigo-600 mb-6 hover:underline">
       Редактировать пост
     </button>
     <div id="post-content"></div>
@@ -242,6 +244,18 @@
       });
 
       openPost(currentPostId); // перезагрузка
+    }
+
+    async function deletePost() {
+      await fetch(`${API_BASE}/posts/${currentPostId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      });
+
+      navigateTo('home');
     }
 
     // ================== Create / Edit Post ==================
